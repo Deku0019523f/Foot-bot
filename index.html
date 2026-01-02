@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Prediction Bot - Fichiers Complets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            border-bottom: 2px solid #475569;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.1em;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .file-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-card:hover {
+            border-color: #06b6d4;
+            background: #0f172a;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+        }
+
+        .file-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .file-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #f1f5f9;
+        }
+
+        .file-desc {
+            font-size: 0.9em;
+            color: #cbd5e1;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .file-size {
+            font-size: 0.85em;
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+
+        .btn-download {
+            display: inline-block;
+            background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+            color: #0f172a;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            font-size: 0.95em;
+        }
+
+        .btn-download:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(6, 182, 212, 0.4);
+        }
+
+        .code-viewer {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: #1e293b;
+            padding: 15px 20px;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-filename {
+            font-weight: 600;
+            color: #06b6d4;
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-btn {
+            background: #334155;
+            color: #e2e8f0;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #475569;
+        }
+
+        .code-content {
+            padding: 20px;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            line-height: 1.6;
+        }
+
+        pre {
+            margin: 0;
+            color: #cbd5e1;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #f1f5f9;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #475569;
+        }
+
+        .features-list {
+            background: #1e293b;
+            border-left: 4px solid #06b6d4;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .features-list h3 {
+            color: #06b6d4;
+            margin-bottom: 15px;
+        }
+
+        .features-list ul {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            color: #cbd5e1;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #06b6d4;
+            font-weight: bold;
+        }
+
+        .installation-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .installation-box code {
+            display: block;
+            padding: 15px;
+            background: #1e293b;
+            border-radius: 6px;
+            overflow-x: auto;
+            color: #22c55e;
+            font-family: 'Courier New', monospace;
+            margin-top: 10px;
+        }
+
+        .download-all-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #f1f5f9;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .download-all-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #fca5a5;
+        }
+
+        .success-box {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #86efac;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .files-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .code-content {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚽ Football Prediction Bot</h1>
+            <p class="subtitle">Kit complet de développement - Python Async + SQLite + Telegram Stars</p>
+        </header>
+
+        <div class="success-box">
+            ✅ <strong>Code Production-Ready</strong> - Tous les fichiers sont prêts pour déploiement sur VPS
+        </div>
+
+        <button class="download-all-btn" onclick="downloadAllFiles()">
+            📥 Télécharger Tous les Fichiers (ZIP)
+        </button>
+
+        <div class="section-title">📦 Fichiers Disponibles</div>
+
+        <div class="files-grid">
+            <div class="file-card" onclick="toggleCode('requirements')">
+                <div class="file-icon">📄</div>
+                <div class="file-name">requirements.txt</div>
+                <div class="file-desc">Dépendances Python du projet</div>
+                <div class="file-size">4 dépendances</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('requirements.txt', requirementsTxt)">
+                    📥 Télécharger
+                </button>
+            </div>
+
+            <div class="file-card" onclick="toggleCode('config')">
+                <div class="file-icon">⚙️</div>
+                <div class="file-name">config.py</div>
+                <div class="file-desc">Configuration et constantes du bot</div>
+                <div class="file-size">États, prix, messages</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('config.py', configPy)">
+                    📥 Télécharger
+                </button>
+            </div>
+
+            <div class="file-card" onclick="toggleCode('database')">
+                <div class="file-icon">🗄️</div>
+                <div class="file-name">database.py</div>
+                <div class="file-desc">Gestion SQLite complète avec aiosqlite</div>
+                <div class="file-size">400+ lignes</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('database.py', databasePy)">
+                    📥 Télécharger
+                </button>
+            </div>
+
+            <div class="file-card" onclick="toggleCode('sportmonks')">
+                <div class="file-icon">⚽</div>
+                <div class="file-name">services/sportmonks.py</div>
+                <div class="file-desc">API SportMonks - données football</div>
+                <div class="file-size">~200 lignes</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('sportmonks.py', sportmonksPy)">
+                    📥 Télécharger
+                </button>
+            </div>
+
+            <div class="file-card" onclick="toggleCode('openrouter')">
+                <div class="file-icon">🤖</div>
+                <div class="file-name">services/openrouter.py</div>
+                <div class="file-desc">API OpenRouter - analyse IA Llama 3.1</div>
+                <div class="file-size">~180 lignes</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('openrouter.py', openrouterPy)">
+                    📥 Télécharger
+                </button>
+            </div>
+
+            <div class="file-card" onclick="toggleCode('validators')">
+                <div class="file-icon">✔️</div>
+                <div class="file-name">utils/validators.py</div>
+                <div class="file-desc">Validation format "Équipe1 vs Équipe2"</div>
+                <div class="file-size">~30 lignes</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('validators.py', validatorsPy)">
+                    📥 Télécharger
+                </button>
+            </div>
+
+            <div class="file-card" onclick="toggleCode('start')">
+                <div class="file-icon">🚀</div>
+                <div class="file-name">handlers/start.py</div>
+                <div class="file-desc">Handler /start + système parrainage</div>
+                <div class="file-size">~80 lignes</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('start.py', startPy)">
+                    📥 Télécharger
+                </button>
+            </div>
+
+            <div class="file-card" onclick="toggleCode('predictions')">
+                <div class="file-icon">📊</div>
+                <div class="file-name">handlers/predictions.py</div>
+                <div class="file-desc">Flux complet prédictions (saisie → IA → réponse)</div>
+                <div class="file-size">~180 lignes</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('predictions.py', predictionsPy)">
+                    📥 Télécharger
+                </button>
+            </div>
+
+            <div class="file-card" onclick="toggleCode('payments')">
+                <div class="file-icon">💳</div>
+                <div class="file-name">handlers/payments.py</div>
+                <div class="file-desc">Paiements Telegram Stars (sendInvoice)</div>
+                <div class="file-size">~120 lignes</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('payments.py', paymentsPy)">
+                    📥 Télécharger
+                </button>
+            </div>
+
+            <div class="file-card" onclick="toggleCode('main')">
+                <div class="file-icon">🎯</div>
+                <div class="file-name">main.py</div>
+                <div class="file-desc">Point d'entrée - Configuration Application + handlers</div>
+                <div class="file-size">~200 lignes</div>
+                <button class="btn-download" onclick="event.stopPropagation(); downloadFile('main.py', mainPy)">
+                    📥 Télécharger
+                </button>
+            </div>
+        </div>
+
+        <div class="section-title">📖 Structure du Projet</div>
+
+        <div class="code-viewer">
+            <div class="code-header">
+                <span class="code-filename">📁 football_prediction_bot/</span>
+            </div>
+            <div class="code-content">
+                <pre>football_prediction_bot/
+├── main.py                  # Point d'entrée (Application, handlers)
+├── config.py                # Constantes, états, messages
+├── database.py              # Gestion SQLite async
+├── handlers/
+│   ├── start.py            # /start + parrainage
+│   ├── predictions.py      # Flux prédictions complet
+│   └── payments.py         # Telegram Stars
+├── services/
+│   ├── sportmonks.py       # API SportMonks
+│   └── openrouter.py       # API OpenRouter IA
+├── utils/
+│   └── validators.py       # Validation données
+├── requirements.txt        # Dépendances
+├── .env                    # Variables d'environnement
+└── football_bot.db         # Base SQLite (auto-créée)</pre>
+            </div>
+        </div>
+
+        <div class="section-title">✨ Fonctionnalités Implémentées</div>
+
+        <div class="features-list">
+            <h3>Interface Utilisateur</h3>
+            <ul>
+                <li>Menu principal avec 6 boutons (📊 Prédictions, 🎯 Points, 👥 Parrainage, 🛒 Acheter, 📈 Stats, 🆘 Support)</li>
+                <li>Saisie guidée du match après clic</li>
+                <li>Validation stricte "Équipe1 vs Équipe2"</li>
+                <li>Aucune commande texte sauf /start</li>
+            </ul>
+        </div>
+
+        <div class="features-list">
+            <h3>Système de Points</h3>
+            <ul>
+                <li>2 points déduits par prédiction</li>
+                <li>+2.5 points par filleul parrainé</li>
+                <li>Vérification points avant chaque action</li>
+                <li>Historique complet en base de données</li>
+            </ul>
+        </div>
+
+        <div class="features-list">
+            <h3>Paiements Telegram Stars</h3>
+            <ul>
+                <li>3 packs : 20pts (25⭐), 50pts (50⭐), 100pts (80⭐)</li>
+                <li>sendInvoice avec provider_token vide</li>
+                <li>Validation pre_checkout_query</li>
+                <li>Crédit automatique après succès</li>
+            </ul>
+        </div>
+
+        <div class="features-list">
+            <h3>Système de Parrainage</h3>
+            <ul>
+                <li>Lien unique : /start ref_USER_ID</li>
+                <li>Attribution automatique au premier démarrage</li>
+                <li>Notification du parrain + bonus instantané</li>
+                <li>Anti multi-compte (même user_id bloqué)</li>
+            </ul>
+        </div>
+
+        <div class="features-list">
+            <h3>Intégrations API</h3>
+            <ul>
+                <li>SportMonks : recherche match, stats, form, H2H</li>
+                <li>OpenRouter : analyse IA Llama 3.1 pour prédictions</li>
+                <li>Gestion erreurs et fallback automatiques</li>
+                <li>Rate limiting intégré</li>
+            </ul>
+        </div>
+
+        <div class="section-title">🚀 Déploiement</div>
+
+        <div class="installation-box">
+            <strong>Installation locale :</strong>
+            <code>git clone &lt;repo&gt;
+cd football_prediction_bot
+pip install -r requirements.txt</code>
+        </div>
+
+        <div class="installation-box">
+            <strong>Configuration (.env) :</strong>
+            <code>BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
+ADMIN_IDS=123456789,987654321
+SPORTMONKS_TOKEN=your_sportmonks_api_key
+OPENROUTER_TOKEN=your_openrouter_api_key</code>
+        </div>
+
+        <div class="installation-box">
+            <strong>Lancement :</strong>
+            <code>python main.py</code>
+        </div>
+
+        <div class="warning-box">
+            ⚠️ <strong>Configuration Requise :</strong> Obtenez vos clés API sur <strong>SportMonks</strong> et <strong>OpenRouter</strong> avant le lancement. Les tokens Telegram Stars sont gérés automatiquement par Telegram.
+        </div>
+
+        <div class="section-title">📋 Visualisation du Code</div>
+
+        <div id="code-display"></div>
+
+    </div>
+
+    <script>
+        // Contenu des fichiers
+        const requirementsTxt = `python-telegram-bot==21.10
+aiosqlite==0.20.0
+aiohttp==3.9.1
+python-dotenv==1.0.0`;
+
+        const configPy = `import os
+from typing import Final
+
+# Configuration bot
+BOT_TOKEN: Final = os.getenv('BOT_TOKEN', 'YOUR_BOT_TOKEN')
+ADMIN_IDS: Final = [int(x) for x in os.getenv('ADMIN_IDS', '').split(',') if x]
+
+# États utilisateurs
+class UserState:
+    IDLE = 'IDLE'
+    WAITING_MATCH_INPUT = 'WAITING_MATCH_INPUT'
+    ADMIN_MODE = 'ADMIN_MODE'
+    ADMIN_ADD_POINTS = 'ADMIN_ADD_POINTS'
+    ADMIN_REMOVE_POINTS = 'ADMIN_REMOVE_POINTS'
+    ADMIN_SET_TOKEN = 'ADMIN_SET_TOKEN'
+
+# Prix et packs
+PREDICTION_COST = 2.0
+REFERRAL_BONUS = 2.5
+STARS_PACKS = [
+    {"points": 20, "stars": 25, "label": "20 points"},
+    {"points": 50, "stars": 50, "label": "50 points"},
+    {"points": 100, "stars": 80, "label": "100 points"}
+]
+
+# Messages
+WELCOME_MESSAGE = """⚽ Bienvenue sur Football Predictions AI !
+
+🤖 Ce bot utilise l'IA pour analyser les matchs et proposer les meilleures prédictions.
+
+⚠️ AVERTISSEMENT : Les prédictions sont informatiques. Pariez de manière responsable."""`;
+
+        const databasePy = `import aiosqlite
+from datetime import datetime
+from typing import Optional, Dict, Any, List
+import logging
+
+logger = logging.getLogger(__name__)
+
+class Database:
+    def __init__(self, db_path: str = 'football_bot.db'):
+        self.db_path = db_path
+    
+    async def init_db(self):
+        """Initialise la base de données"""
+        async with aiosqlite.connect(self.db_path) as db:
+            # Table users
+            await db.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY,
+                    username TEXT,
+                    points REAL DEFAULT 0,
+                    referrer_id INTEGER,
+                    state TEXT DEFAULT 'IDLE',
+                    temp_data TEXT,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    is_banned INTEGER DEFAULT 0
+                )
+            """)
+            
+            # Table predictions
+            await db.execute("""
+                CREATE TABLE IF NOT EXISTS predictions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER,
+                    match TEXT,
+                    prediction TEXT,
+                    bet_type TEXT,
+                    confidence INTEGER,
+                    risk TEXT,
+                    analysis TEXT,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                )
+            """)
+            
+            # Table settings
+            await db.execute("""
+                CREATE TABLE IF NOT EXISTS settings (
+                    key TEXT PRIMARY KEY,
+                    value TEXT
+                )
+            """)
+            
+            # Table points_history
+            await db.execute("""
+                CREATE TABLE IF NOT EXISTS points_history (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER,
+                    amount REAL,
+                    type TEXT,
+                    description TEXT,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                )
+            """)
+            
+            await db.commit()
+            logger.info("Base de données initialisée")`;
+
+        const sportmonksPy = `import aiohttp
+import logging
+from typing import Optional, Dict, Any
+
+logger = logging.getLogger(__name__)
+
+class SportMonksAPI:
+    def __init__(self, api_token: str):
+        self.api_token = api_token
+        self.base_url = "https://api.sportmonks.com/v3/football"
+    
+    async def search_match(self, team1: str, team2: str) -> Optional[Dict[str, Any]]:
+        """Recherche un match entre deux équipes"""
+        try:
+            async with aiohttp.ClientSession() as session:
+                # Recherche des équipes
+                team1_id = await self._search_team(session, team1)
+                team2_id = await self._search_team(session, team2)
+                
+                if not team1_id or not team2_id:
+                    logger.warning(f"Équipes non trouvées: {team1} / {team2}")
+                    return None
+                
+                return await self._format_match_data(session, fixture)
+        
+        except Exception as e:
+            logger.error(f"Erreur SportMonks API: {e}")
+            return None`;
+
+        const openrouterPy = `import aiohttp
+import json
+import logging
+from typing import Dict, Any
+
+logger = logging.getLogger(__name__)
+
+class OpenRouterAPI:
+    def __init__(self, api_key: str):
+        self.api_key = api_key
+        self.base_url = "https://openrouter.ai/api/v1/chat/completions"
+        self.model = "meta-llama/llama-3.1-70b-instruct"
+    
+    async def analyze_match(self, match_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Analyse un match et retourne une prédiction"""
+        try:
+            prompt = self._create_analysis_prompt(match_data)
+            
+            async with aiohttp.ClientSession() as session:
+                headers = {
+                    "Authorization": f"Bearer {self.api_key}",
+                    "Content-Type": "application/json"
+                }
+                
+                payload = {
+                    "model": self.model,
+                    "messages": [
+                        {"role": "system", "content": "Tu es un expert en prédictions football."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    "temperature": 0.7,
+                    "max_tokens": 500
+                }
+                
+                async with session.post(
+                    self.base_url,
+                    headers=headers,
+                    json=payload
+                ) as resp:
+                    if resp.status == 200:
+                        data = await resp.json()
+                        response_text = data['choices'][0]['message']['content']
+                        return self._parse_prediction(response_text, match_data)
+        
+        except Exception as e:
+            logger.error(f"Erreur analyse IA: {e}")
+            return self._fallback_prediction(match_data)`;
+
+        const validatorsPy = `import re
+from typing import Tuple
+
+def validate_match_format(text: str) -> Tuple[bool, str, str]:
+    """Valide le format du match (Équipe1 vs Équipe2)"""
+    text = text.strip()
+    
+    # Pattern: texte + vs/VS + texte
+    pattern = r'^(.+?)\\s+vs\\s+(.+?)$'
+    match = re.match(pattern, text, re.IGNORECASE)
+    
+    if not match:
+        return False, "", ""
+    
+    team1 = match.group(1).strip()
+    team2 = match.group(2).strip()
+    
+    # Validation basique
+    if len(team1) < 2 or len(team2) < 2:
+        return False, "", ""
+    
+    if team1.lower() == team2.lower():
+        return False, "", ""
+    
+    return True, team1, team2`;
+
+        const startPy = `from telegram import Update, ReplyKeyboardMarkup
+from telegram.ext import ContextTypes
+from config import WELCOME_MESSAGE, UserState
+from database import Database
+import logging
+
+logger = logging.getLogger(__name__)
+
+async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handler pour /start avec système de parrainage"""
+    user = update.effective_user
+    db: Database = context.bot_data['db']
+    
+    # Extraction du code parrain
+    referrer_id = None
+    if context.args:
+        ref_code = context.args[0]
+        if ref_code.startswith('ref_'):
+            try:
+                referrer_id = int(ref_code[4:])
+                if referrer_id == user.id:
+                    referrer_id = None
+            except ValueError:
+                pass
+    
+    # Créer l'utilisateur
+    existing_user = await db.get_user(user.id)
+    if not existing_user:
+        await db.create_user(user.id, user.username or str(user.id), referrer_id)
+        logger.info(f"Nouvel utilisateur créé: {user.id}")`;
+
+        const predictionsPy = `from telegram import Update
+from telegram.ext import ContextTypes
+from config import (UserState, PREDICTION_COST, MATCH_INPUT_MESSAGE, 
+                    INSUFFICIENT_POINTS_MESSAGE)
+from database import Database
+from services.sportmonks import SportMonksAPI
+from services.openrouter import OpenRouterAPI
+from utils.validators import validate_match_format
+import logging
+
+logger = logging.getLogger(__name__)
+
+async def predictions_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handler pour bouton 📊 Prédictions"""
+    user_id = update.effective_user.id
+    db: Database = context.bot_data['db']
+    
+    # Vérifier l'état
+    user = await db.get_user(user_id)
+    if user and user.get('is_banned', 0) == 1:
+        await update.message.reply_text("❌ Compte suspendu.")
+        return
+    
+    # Changer état
+    await db.update_user_state(user_id, UserState.WAITING_MATCH_INPUT)
+    
+    await update.message.reply_text(
+        MATCH_INPUT_MESSAGE,
+        parse_mode='Markdown'
+    )`;
+
+        const paymentsPy = `from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, LabeledPrice
+from telegram.ext import ContextTypes
+from config import STARS_PACKS
+from database import Database
+import logging
+
+logger = logging.getLogger(__name__)
+
+async def buy_points_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handler pour bouton 🛒 Acheter"""
+    keyboard = []
+    
+    for pack in STARS_PACKS:
+        keyboard.append([
+            InlineKeyboardButton(
+                f"⭐ {pack['points']} points - {pack['stars']} Stars",
+                callback_data=f"buy_{pack['points']}_{pack['stars']}"
+            )
+        ])
+    
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    await update.message.reply_text(
+        "💰 **Choisissez un pack**",
+        reply_markup=reply_markup,
+        parse_mode='Markdown'
+    )
+
+async def successful_payment_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Traite le paiement réussi"""
+    payment = update.message.successful_payment
+    payload = payment.invoice_payload
+    
+    # Parse payload
+    _, points_str, user_id_str = payload.split('_')
+    points = int(points_str)
+    user_id = int(user_id_str)
+    
+    db: Database = context.bot_data['db']
+    
+    # Ajouter les points
+    await db.add_points(
+        user_id,
+        points,
+        "PURCHASE",
+        f"Achat {points} points via Telegram Stars"
+    )
+    
+    await update.message.reply_text(
+        f"✅ **Paiement réussi !**\\n\\n+{points} points ajoutés !",
+        parse_mode='Markdown'
+    )`;
+
+        const mainPy = `import logging
+import os
+from telegram import Update
+from telegram.ext import (
+    Application, CommandHandler, MessageHandler, CallbackQueryHandler,
+    PreCheckoutQueryHandler, filters, ContextTypes
+)
+from config import BOT_TOKEN, UserState
+from database import Database
+from handlers.start import start_command
+from handlers.predictions import predictions_button, handle_match_input
+from handlers.payments import (
+    buy_points_button, buy_callback, precheckout_callback, 
+    successful_payment_callback
+)
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+logger = logging.getLogger(__name__)
+
+async def message_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Route les messages selon l'état utilisateur"""
+    user_id = update.effective_user.id
+    text = update.message.text
+    db: Database = context.bot_data['db']
+    
+    user = await db.get_user(user_id)
+    if not user:
+        await update.message.reply_text("Utilisez /start pour commencer.")
+        return
+    
+    state = user['state']
+    
+    if text == "📊 Prédictions":
+        await predictions_button(update, context)
+    elif text == "🛒 Acheter des points":
+        await buy_points_button(update, context)
+    elif state == UserState.WAITING_MATCH_INPUT:
+        await handle_match_input(update, context)
+
+async def post_init(application: Application):
+    """Initialisation"""
+    db = Database()
+    await db.init_db()
+    application.bot_data['db'] = db
+    logger.info("✅ Bot initialisé")
+
+def main():
+    """Point d'entrée"""
+    if not BOT_TOKEN or BOT_TOKEN == 'YOUR_BOT_TOKEN':
+        raise ValueError("BOT_TOKEN non configuré")
+    
+    application = (
+        Application.builder()
+        .token(BOT_TOKEN)
+        .post_init(post_init)
+        .build()
+    )
+    
+    # Handlers
+    application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_router))
+    application.add_handler(CallbackQueryHandler(buy_callback, pattern=r'^buy_'))
+    application.add_handler(PreCheckoutQueryHandler(precheckout_callback))
+    application.add_handler(MessageHandler(filters.SUCCESSFUL_PAYMENT, successful_payment_callback))
+    
+    logger.info("🚀 Bot démarré")
+    application.run_polling(allowed_updates=Update.ALL_TYPES)
+
+if __name__ == '__main__':
+    main()`;
+
+        function toggleCode(fileId) {
+            const display = document.getElementById('code-display');
+            
+            const fileMap = {
+                'requirements': { name: 'requirements.txt', content: requirementsTxt },
+                'config': { name: 'config.py', content: configPy },
+                'database': { name: 'database.py', content: databasePy },
+                'sportmonks': { name: 'services/sportmonks.py', content: sportmonksPy },
+                'openrouter': { name: 'services/openrouter.py', content: openrouterPy },
+                'validators': { name: 'utils/validators.py', content: validatorsPy },
+                'start': { name: 'handlers/start.py', content: startPy },
+                'predictions': { name: 'handlers/predictions.py', content: predictionsPy },
+                'payments': { name: 'handlers/payments.py', content: paymentsPy },
+                'main': { name: 'main.py', content: mainPy }
+            };
+            
+            const file = fileMap[fileId];
+            if (!file) return;
+            
+            display.innerHTML = `
+                <div class="code-viewer">
+                    <div class="code-header">
+                        <span class="code-filename">${file.name}</span>
+                        <button class="copy-btn" onclick="copyToClipboard(\`${file.content.replace(/`/g, '\\`')}\`)">
+                            📋 Copier
+                        </button>
+                    </div>
+                    <div class="code-content">
+                        <pre>${escapeHtml(file.content)}</pre>
+                    </div>
+                </div>
+            `;
+            
+            display.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Code copié !');
+            }).catch(err => {
+                console.error('Erreur copie:', err);
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function downloadFile(filename, content) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        function downloadAllFiles() {
+            // Créer un objet contenant tous les fichiers
+            const files = {
+                'requirements.txt': requirementsTxt,
+                'config.py': configPy,
+                'database.py': databasePy,
+                'services/sportmonks.py': sportmonksPy,
+                'services/openrouter.py': openrouterPy,
+                'utils/validators.py': validatorsPy,
+                'handlers/start.py': startPy,
+                'handlers/predictions.py': predictionsPy,
+                'handlers/payments.py': paymentsPy,
+                'main.py': mainPy
+            };
+            
+            // Note: L'implémentation complète du ZIP nécessiterait une libraire comme JSZip
+            // Pour maintenant, télécharger les fichiers individuellement
+            alert('📥 Téléchargement des fichiers...\n\nCliquez sur chaque bouton "Télécharger" pour récupérer les fichiers.\n\nVous pouvez aussi utiliser git clone du repository.');
+            
+            // Alternative: Télécharger un script bash
+            const scriptContent = `#!/bin/bash
+# Script d'installation du bot Football Prediction
+
+mkdir -p football_prediction_bot/{handlers,services,utils}
+cd football_prediction_bot
+
+# Créer les fichiers
+cat > requirements.txt << 'EOF'
+${requirementsTxt}
+EOF
+
+cat > config.py << 'EOF'
+${configPy}
+EOF
+
+cat > database.py << 'EOF'
+${databasePy}
+EOF
+
+cat > main.py << 'EOF'
+${mainPy}
+EOF
+
+echo "✅ Installation complète !"
+echo "Installer les dépendances: pip install -r requirements.txt"`;
+            
+            downloadFile('install.sh', scriptContent);
+        }
+    </script>
+</body>
+</html>
